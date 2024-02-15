@@ -4,7 +4,7 @@ public class ArrayDeque<Glorp> {
     private int nextLast;
     private int size;
     public ArrayDeque() {
-        items = (Glorp []) new Object[8];;
+        items = (Glorp []) new Object[8];
         size = 0;
         nextFirst = 3;
         nextLast = 4;
@@ -13,46 +13,46 @@ public class ArrayDeque<Glorp> {
         size = other.size;
         nextLast = other.nextLast;
         nextFirst = other.nextFirst;
-        for(int i = nextFirst+1;i<nextLast;i++){
+        for(int i = nextFirst + 1; i < nextLast; i++) {
             items[i] = other.items[i];
         }
     }
-    public  int size(){return size;}
-    public void resize(){
+    public  int size() {return size;}
+    public void resize() {
         Glorp[] a = (Glorp []) new Object[items.length*2];
         System.arraycopy(items,0,a,0,size);
         items = a;
-        nextFirst = items.length-1;
+        nextFirst = items.length - 1;
         nextLast = size;
     }
-    public void addFirst(Glorp val){
-        if(size == items.length){
+    public void addFirst(Glorp val) {
+        if(size == items.length) {
             resize();
         }
         items[nextFirst--] = val;
         size += 1;
         nextFirst = (nextFirst + items.length)%items.length;
     }
-    public  void addLast(Glorp val){
-        if(size == items.length){
+    public  void addLast(Glorp val) {
+        if(size == items.length) {
             resize();
         }
         items[nextLast++] = val;
         size += 1;
         nextLast %= items.length;
     }
-    public void removeFirst(){
+    public void removeFirst() {
         nextFirst++;
         size -= 1;
     }
-    public void removeLast(){
+    public void removeLast() {
         nextLast--;
         size -= 1;
     }
-    public Glorp get(int index){
+    public Glorp get(int index) {
         return items[index];
     }
-    public Glorp getLast(){
+    public Glorp getLast() {
         int i = nextLast-1;
         return items[i];
     }
