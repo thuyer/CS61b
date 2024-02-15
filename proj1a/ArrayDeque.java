@@ -25,13 +25,19 @@ public class ArrayDeque<Glorp> {
         nextFirst = items.length - 1;
         nextLast = size;
     }
+    public boolean isEmpty() {
+        if(size == 0) {
+            return true;
+        }
+        return false;
+    }
     public void addFirst(Glorp val) {
         if(size == items.length) {
             resize();
         }
         items[nextFirst--] = val;
         size += 1;
-        nextFirst = (nextFirst + items.length)%items.length;
+        nextFirst = (nextFirst + items.length) % items.length;
     }
     public  void addLast(Glorp val) {
         if(size == items.length) {
@@ -41,13 +47,15 @@ public class ArrayDeque<Glorp> {
         size += 1;
         nextLast %= items.length;
     }
-    public void removeFirst() {
+    public Glorp[] removeFirst() {
         nextFirst++;
         size -= 1;
+        return items;
     }
-    public void removeLast() {
+    public Glorp[] removeLast() {
         nextLast--;
         size -= 1;
+        return items;
     }
     public Glorp get(int index) {
         return items[index];
