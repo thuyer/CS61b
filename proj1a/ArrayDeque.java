@@ -47,19 +47,21 @@ public class ArrayDeque<Glorp> {
         size += 1;
         nextLast %= items.length;
     }
-    public void removeFirst() {
+    public Glorp removeFirst() {
         if(items == null) {
-            return;
+            return null;
         }
         nextFirst++;
         size -= 1;
+        return items[nextFirst];
     }
-    public void removeLast() {
+    public Glorp removeLast() {
         if(items == null) {
-            return;
+            return null;
         }
         nextLast--;
         size -= 1;
+        return items[nextLast];
     }
     public Glorp get(int i) {
         return items[(nextFirst+i+1) % items.length];
