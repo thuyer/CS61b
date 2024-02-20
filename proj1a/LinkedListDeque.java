@@ -18,16 +18,6 @@ public class LinkedListDeque<T> {
         sentinel.prev = sentinel;
         size = 0;
     }
-    public LinkedListDeque(LinkedListDeque<T> other) {
-        sentinel = new DNode(null,null,null);
-        sentinel.next = sentinel;
-        sentinel.prev = sentinel;
-        size = 0;
-
-        for(int i = 0; i < other.size; i++){
-            addLast((T)other.get(i));
-        }
-    }
 
     public void addFirst(T item) {
         sentinel.next = new DNode(sentinel, item, sentinel.next);

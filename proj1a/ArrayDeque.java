@@ -9,21 +9,25 @@ public class ArrayDeque<T> {
         nextFirst = 3;
         nextLast = 4;
     }
-    public ArrayDeque(ArrayDeque<T> other) {
-        size = other.size;
-        nextLast = other.nextLast;
-        nextFirst = other.nextFirst;
-        for(int i = nextFirst + 1; i < nextLast; i++) {
-            items[i] = other.items[i];
-        }
-    }
+
     public  int size() {return size;}
-    public void resize() {
+    private void enlarge() {
         T[] a = (T []) new Object[items.length*2];
         System.arraycopy(items,0,a,0,size);
         items = a;
         nextFirst = items.length - 1;
         nextLast = size;
+    }
+    private void reduce(){
+        T[] a = (T []) new Object[items.length/2];
+        int temp = nextFirst + 1;
+        for (int i = 0; i<items.length; i++){
+            a[i] = items[temp % items.length];
+            temp += 1;
+        }
+        items = a;
+        nextFirst = items.length;
+        nextLast = size - 1;
     }
     public boolean isEmpty() {
         if(size == 0) {
@@ -33,7 +37,7 @@ public class ArrayDeque<T> {
     }
     public void addFirst(T val) {
         if(size == items.length - 1) {
-            resize();
+            enlarge();
         }
         items[nextFirst--] = val;
         size += 1;
@@ -41,7 +45,7 @@ public class ArrayDeque<T> {
     }
     public  void addLast(T val) {
         if(size == items.length - 1) {
-            resize();
+            enlarge();
         }
         items[nextLast++] = val;
         size += 1;
@@ -51,6 +55,9 @@ public class ArrayDeque<T> {
         if(items == null) {
             return null;
         }
+        if(items.length / size >= 4) {
+            reduce();
+        }
         nextFirst++;
         size -= 1;
         return items[nextFirst];
@@ -58,6 +65,9 @@ public class ArrayDeque<T> {
     public T removeLast() {
         if(items == null) {
             return null;
+        }
+        if(items.length / size >= 4) {
+            reduce();
         }
         nextLast--;
         size -= 1;
@@ -69,7 +79,8 @@ public class ArrayDeque<T> {
     public void printDeque() {
         int index = nextFirst + 1;
         for (int i = 0; i < size; i++){
-            System.out.print(items[index]);
+            System.out.print(items[index++]);
+            index %= items.length;
         }
     }
 }
