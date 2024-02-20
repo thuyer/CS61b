@@ -1,15 +1,15 @@
-public class ArrayDeque<Glorp> {
-    private Glorp[] items;
+public class ArrayDeque<T> {
+    private T[] items;
     private int nextFirst;
     private int nextLast;
     private int size;
     public ArrayDeque() {
-        items = (Glorp []) new Object[8];
+        items = (T []) new Object[8];
         size = 0;
         nextFirst = 3;
         nextLast = 4;
     }
-    public ArrayDeque(ArrayDeque<Glorp> other) {
+    public ArrayDeque(ArrayDeque<T> other) {
         size = other.size;
         nextLast = other.nextLast;
         nextFirst = other.nextFirst;
@@ -19,7 +19,7 @@ public class ArrayDeque<Glorp> {
     }
     public  int size() {return size;}
     public void resize() {
-        Glorp[] a = (Glorp []) new Object[items.length*2];
+        T[] a = (T []) new Object[items.length*2];
         System.arraycopy(items,0,a,0,size);
         items = a;
         nextFirst = items.length - 1;
@@ -31,23 +31,23 @@ public class ArrayDeque<Glorp> {
         }
         return false;
     }
-    public void addFirst(Glorp val) {
-        if(size == items.length) {
+    public void addFirst(T val) {
+        if(size == items.length - 1) {
             resize();
         }
         items[nextFirst--] = val;
         size += 1;
         nextFirst = (nextFirst + items.length) % items.length;
     }
-    public  void addLast(Glorp val) {
-        if(size == items.length) {
+    public  void addLast(T val) {
+        if(size == items.length - 1) {
             resize();
         }
         items[nextLast++] = val;
         size += 1;
         nextLast %= items.length;
     }
-    public Glorp removeFirst() {
+    public T removeFirst() {
         if(items == null) {
             return null;
         }
@@ -55,7 +55,7 @@ public class ArrayDeque<Glorp> {
         size -= 1;
         return items[nextFirst];
     }
-    public Glorp removeLast() {
+    public T removeLast() {
         if(items == null) {
             return null;
         }
@@ -63,12 +63,14 @@ public class ArrayDeque<Glorp> {
         size -= 1;
         return items[nextLast];
     }
-    public Glorp get(int i) {
+    public T get(int i) {
         return items[(nextFirst+i+1) % items.length];
     }
-    public Glorp get() {
-        int i = nextLast-1;
-        return items[i];
+    public void printDeque() {
+        int index = nextFirst + 1;
+        for (int i = 0; i < size; i++){
+            System.out.print(items[index]);
+        }
     }
 }
 
