@@ -29,6 +29,10 @@ public class ArrayDeque<T> {
         nextFirst = items.length;
         nextLast = size - 1;
     }
+    private int module(int number){
+        number = (number + items.length)% items.length;
+        return number;
+    }
     public boolean isEmpty() {
         if(size == 0) {
             return true;
@@ -41,7 +45,7 @@ public class ArrayDeque<T> {
         }
         items[nextFirst--] = val;
         size += 1;
-        nextFirst = (nextFirst + items.length) % items.length;
+        nextFirst = module(nextFirst);
     }
     public  void addLast(T val) {
         if(size == items.length - 1) {
@@ -49,7 +53,7 @@ public class ArrayDeque<T> {
         }
         items[nextLast++] = val;
         size += 1;
-        nextLast %= items.length;
+        nextLast = module(nextLast);
     }
     public T removeFirst() {
         if(items == null) {
@@ -58,7 +62,7 @@ public class ArrayDeque<T> {
         if(items.length / size >= 4) {
             reduce();
         }
-        nextFirst++;
+        nextFirst = module(++nextFirst);
         size -= 1;
         return items[nextFirst];
     }
@@ -69,18 +73,22 @@ public class ArrayDeque<T> {
         if(items.length / size >= 4) {
             reduce();
         }
-        nextLast--;
+        nextLast = module(--nextLast);
         size -= 1;
         return items[nextLast];
     }
     public T get(int i) {
-        return items[(nextFirst+i+1) % items.length];
+        if(i >= size) {
+            return null;
+        }
+        int ptr = module(nextFirst+i+1);
+        return items[ptr];
     }
     public void printDeque() {
         int index = nextFirst + 1;
         for (int i = 0; i < size; i++){
             System.out.print(items[index++]);
-            index %= items.length;
+            index = module(index);
         }
     }
 }
